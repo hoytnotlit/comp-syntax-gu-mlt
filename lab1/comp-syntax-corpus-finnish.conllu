@@ -1,0 +1,322 @@
+# Keitä he ovat ?
+1	Keitä	_	PRON	_	_	0	root	_	_
+2	he	_	PRON	_	_	1	nsubj	_	_
+3	ovat	_	AUX	_	_	1	cop	_	_
+4	?	_	PUNCT	_	_	1	punct	_	_
+
+# Pieni kaupunki , jossa on kaksi minareettia , lipuu ohitse .
+1	Pieni	_	ADJ	_	_	2	amod	_	_
+2	kaupunki	_	NOUN	_	_	9	nsubj	_	_
+3	,	_	PUNCT	_	_	4	punct	_	_
+4	jossa	_	PRON	_	_	2	acl:relcl	_	_
+5	on	_	AUX	_	_	4	cop	_	_
+6	kaksi	_	NUM	_	_	7	nummod	_	_
+7	minareettia	_	NOUN	_	_	4	nsubj	_	_
+8	,	_	PUNCT	_	_	4	punct	_	_
+9	lipuu	_	VERB	_	_	0	root	_	_
+10	ohitse	_	ADV	_	_	9	advmod	_	_
+11	.	_	PUNCT	_	_	9	punct	_	_
+
+# Olin vain poika, jolla oli mutaiset kengät . 
+1	Olin	_	AUX	_	_	3	cop	_	_
+2	vain	_	ADV	_	_	3	advmod	_	_
+3	poika	_	NOUN	_	_	0	root	_	_
+4	,	_	PUNCT	_	_	5	punct	_	_
+5	jolla	_	PRON	_	_	3	acl:relcl	_	_
+6	oli	_	AUX	_	_	5	cop	_	_
+7	mutaiset	_	ADJ	_	_	8	amod	_	_
+8	kengät	_	NOUN	_	_	5	nsubj	_	_
+9	.	_	PUNCT	_	_	3	punct	_	_
+
+# Shenzhenin liikennepoliisi on valinnut epätyypillisiä rangaistuksia aiemminkin .
+1	Shenzhenin	_	PROPN	_	_	2	nmod:poss	_	_
+2	liikennepoliisi	_	NOUN	_	_	4	nsubj	_	_
+3	on	_	AUX	_	_	4	aux	_	_
+4	valinnut	_	VERB	_	_	0	root	_	_
+5	epätyypillisiä	_	ADJ	_	_	6	amod	_	_
+6	rangaistuksia	_	NOUN	_	_	4	obj	_	_
+7	aiemminkin	_	ADV	_	_	4	advmod	_	_
+8	.	_	PUNCT	_	_	4	punct	_	_
+
+# Tulivuorten tutkimusta kutsutaan vulkanologiaksi .
+1	Tulivuorten	_	NOUN	_	_	2	nmod	_	_
+2	tutkimusta	_	NOUN	_	_	3	obj	_	_
+3	kutsutaan	_	VERB	_	_	0	root	_	_
+4	vulkanologiaksi	_	NOUN	_	_	3	xcomp	_	_
+5	.	_	PUNCT	_	_	3	punct	_	_
+
+# Se toteutettiin aivan Meksikon rannikon tuntumassa huhtikuun ja kesäkuun välillä .
+1	Se	_	PRON	_	_	2	obj	_	_
+2	toteutettiin	_	VERB	_	_	0	root	_	_
+3	aivan	_	ADV	_	_	6	advmod	_	_
+4	Meksikon	_	PROPN	_	_	5	nmod	_	_
+5	rannikon	_	NOUN	_	_	6	nmod	_	_
+6	tuntumassa	_	ADV	_	_	2	obl	_	_
+7	huhtikuun	_	NOUN	_	_	2	obl	_	_
+8	ja	_	CCONJ	_	_	9	cc	_	_
+9	kesäkuun	_	NOUN	_	_	7	conj	_	_
+10	välillä	_	ADP	_	_	7	case	_	_
+11	.	_	PUNCT	_	_	2	punct	_	_
+
+# " Hänen äänensä kulki kirjaimellisesti maailman ympäri " , Leive sanoi .
+1	"	_	PUNCT	_	_	4	punct	_	_
+2	Hänen	_	PRON	_	_	3	nmod:poss	_	_
+3	äänensä	_	NOUN	_	_	4	nsubj	_	_
+4	kulki	_	VERB	_	_	0	root	_	_
+5	kirjaimellisesti	_	ADV	_	_	4	advmod	_	_
+6	maailman	_	NOUN	_	_	4	obl	_	_
+7	ympäri	_	ADV	_	_	6	case	_	_
+8	"	_	PUNCT	_	_	4	punct	_	_
+9	,	_	PUNCT	_	_	4	punct	_	_
+10	Leive	_	PROPN	_	_	11	nsubj	_	_
+11	sanoi	_	VERB	_	_	4	parataxis	_	_
+12	.	_	PUNCT	_	_	4	punct	_	_
+
+# Todistaja kertoi poliisille , että uhri oli hyökännyt epäillyn kimppuun huhtikuussa .
+1	Todistaja	_	NOUN	_	_	2	nsubj	_	_
+2	kertoi	_	VERB	_	_	0	root	_	_
+3	poliisille	_	NOUN	_	_	2	obl	_	_
+4	,	_	PUNCT	_	_	2	punct	_	_
+5	että	_	SCONJ	_	_	8	mark	_	_
+6	uhri	_	NOUN	_	_	8	nsubj	_	_
+7	oli	_	AUX	_	_	8	aux	_	_
+8	hyökännyt	_	VERB	_	_	2	ccomp	_	_
+9	epäillyn	_	NOUN	_	_	8	obj	_	_
+10	kimppuun	_	ADV	_	_	9	case	_	_
+11	huhtikuussa	_	NOUN	_	_	8	obl	_	_
+12	.	_	PUNCT	_	_	2	punct	_	_
+
+# Se on ilmeisintä , kun julkkiksen nimi on alun perin melko harvinainen .
+1	Se	_	PRON	_	_	3	nsubj	_	_
+2	on	_	AUX	_	_	3	cop	_	_
+3	ilmeisintä	_	ADJ	_	_	0	root	_	_
+4	,	_	PUNCT	_	_	5	punct	_	_
+5	kun	_	SCONJ	_	_	12	mark	_	_
+6	julkkiksen	_	NOUN	_	_	7	nmod	_	_
+7	nimi	_	NOUN	_	_	12	nsubj	_	_
+8	on	_	AUX	_	_	12	cop	_	_
+9	alun	_	ADV	_	_	12	advmod	_	_
+10	perin	_	ADV	_	_	9	fixed	_	_
+11	melko	_	ADV	_	_	12	advmod	_	_
+12	harvinainen	_	ADJ	_	_	3	advcl	_	_
+13	.	_	PUNCT	_	_	2	punct	_	_
+
+# Tämä ei ole estänyt sijoittajia innolla laittamaan rahojaan rahastoihin .
+1	Tämä	_	PRON	_	_	4	nsubj	_	_
+2	ei	_	AUX	_	_	4	aux	_	_
+3	ole	_	AUX	_	_	4	aux	_	_
+4	estänyt	_	VERB	_	_	0	root	_	_
+5	sijoittajia	_	NOUN	_	_	4	obj	_	_
+6	innolla	_	NOUN	_	_	7	obl	_	_
+7	laittamaan	_	VERB	_	_	4	xcomp	_	_
+8	rahojaan	_	NOUN	_	_	7	obj	_	_
+9	rahastoihin	_	NOUN	_	_	7	obl	_	_
+10	.	_	PUNCT	_	_	4	punct	_	_
+
+# Tämä ristiriita taloudellisten tietojen ja poliittisen retoriikan välillä on tuttua tai sen pitäisi olla .
+1	Tämä	_	PRON	_	_	2	det	_	_
+2	ristiriita	_	NOUN	_	_	10	nsubj	_	_
+3	taloudellisten	_	ADJ	_	_	4	amod	_	_
+4	tietojen	_	NOUN	_	_	2	nmod	_	_
+5	ja	_	CCONJ	_	_	7	cc	_	_
+6	poliittisen	_	ADJ	_	_	7	amod	_	_
+7	retoriikan	_	NOUN	_	_	4	conj	_	_
+8	välillä	_	ADP	_	_	4	case	_	_
+9	on	_	AUX	_	_	10	cop	_	_
+10	tuttua	_	ADJ	_	_	0	root	_	_
+11	,	_	PUNCT	_	_	15	punct	_	_
+12	tai	_	CCONJ	_	_	15	cc	_	_
+13	sen	_	PRON	_	_	15	nsubj	_	_
+14	pitäisi	_	AUX	_	_	15	aux	_	_
+15	olla	_	VERB	_	_	10	conj	_	_
+16	.	_	PUNCT	_	_	10	punct	_	_
+
+# Toteutettavuustutkimuksessa arvioitiin, että matkustajilla kestäisi noin neljä minuuttia ylittää Potomac-joki gondolilla .
+1	Toteutettavuustutkimuksessa	_	NOUN	_	_	2	obl	_	_
+2	arvioitiin	_	VERB	_	_	0	root	_	_
+3	,	_	PUNCT	_	_	4	punct	_	_
+4	että	_	SCONJ	_	_	6	mark	_	_
+5	matkustajilla	_	NOUN	_	_	6	obl	_	_
+6	kestäisi	_	VERB	_	_	2	ccomp	_	_
+7	noin	_	ADV	_	_	8	advmod	_	_
+8	neljä	_	NUM	_	_	9	nummod	_	_
+9	minuuttia	_	NOUN	_	_	6	nsubj	_	_
+10	ylittää	_	VERB	_	_	6	obl	_	_
+11	Potomac	_	PROPN	_	_	12	compound	_	_
+12	-joki	_	NOUN	_	_	10	nsubj	_	_
+13	gondolilla	_	NOUN	_	_	10	obl	_	_
+14	.	_	PUNCT	_	_	2	punct	_	_
+
+# hän keräsi kortteja ja vaihtoi niitä muiden poikien kanssa .
+1	hän	_	PRON	_	_	2	nsubj	_	_
+2	keräsi	_	VERB	_	_	0	root	_	_
+3	kortteja	_	NOUN	_	_	2	obj	_	_
+4	ja	_	CCONJ	_	_	5	cc	_	_
+5	vaihtoi	_	VERB	_	_	2	conj	_	_
+6	niitä	_	PRON	_	_	5	obj	_	_
+7	muiden	_	PRON	_	_	8	det	_	_
+8	poikien	_	NOUN	_	_	2	obl	_	_
+9	kanssa	_	ADP	_	_	8	case	_	_
+10	.	_	PUNCT	_	_	2	punct	_	_
+
+# tästä rikoksesta seuraa viiden vuoden vankilatuomio .
+1	tästä	_	PRON	_	_	2	det	_	_
+2	rikoksesta	_	NOUN	_	_	3	nsubj	_	_
+3	seuraa	_	VERB	_	_	0	root	_	_
+4	viiden	_	NUM	_	_	5	nummod	_	_
+5	vuoden	_	NOUN	_	_	6	nmod	_	_
+6	vankilatuomio	_	NOUN	_	_	3	obj	_	_
+7	.	_	PUNCT	_	_	3	punct	_	_
+
+# uutinen kulkeutui provinssin jokaiseen kylään .
+1	uutinen	_	NOUN	_	_	2	nsubj	_	_
+2	kulkeutui	_	VERB	_	_	0	root	_	_
+3	provinssin	_	NOUN	_	_	5	nmod	_	_
+4	jokaiseen	_	PRON	_	_	5	det	_	_
+5	kylään	_	NOUN	_	_	2	obl	_	_
+6	.	_	PUNCT	_	_	2	punct	_	_
+
+# kannan näitä ajatuksia takaraivossani .
+1	kannan	_	VERB	_	_	0	root	_	_
+2	näitä	_	PRON	_	_	3	det	_	_
+3	ajatuksia	_	NOUN	_	_	1	obj	_	_
+4	takaraivossani	_	NOUN	_	_	1	obl	_	_
+5	.	_	PUNCT	_	_	1	punct	_	_
+
+# Adam olisi siirtynyt ikuiseen elämään .  
+1	Adam	_	PROPN	_	_	3	nsubj	_	_
+2	olisi	_	AUX	_	_	3	aux	_	_
+3	siirtynyt	_	VERB	_	_	0	root	_	_
+4	ikuiseen	_	ADJ	_	_	5	amod	_	_
+5	elämään	_	NOUN	_	_	3	obl	_	_
+6	.	_	PUNCT	_	_	3	punct	_	_
+
+# kotelot olivat mädäntyneet pois ja ne piti vaihtaa uusiin .
+1	kotelot	_	NOUN	_	_	3	nsubj	_	_
+2	olivat	_	AUX	_	_	3	aux	_	_
+3	mädäntyneet	_	VERB	_	_	0	root	_	_
+4	pois	_	ADV	_	_	3	advmod	_	_
+5	ja	_	CCONJ	_	_	8	cc	_	_
+6	ne	_	PRON	_	_	8	nsubj	_	_
+7	piti	_	AUX	_	_	8	aux	_	_
+8	vaihtaa	_	VERB	_	_	3	conj	_	_
+9	uusiin	_	ADJ	_	_	8	obj	_	_
+10	.	_	PUNCT	_	_	3	punct	_	_
+
+# hän vihastui siitä , että tämä tytönhupakko kehtasi tehdä hänestä hölmön luokan edessä .
+1	hän	_	PRON	_	_	2	nsubj	_	_
+2	vihastui	_	VERB	_	_	0	root	_	_
+3	siitä	_	PRON	_	_	2	obj	_	_
+4	,	_	PUNCT	_	_	8	punct	_	_
+5	että	_	SCONJ	_	_	8	mark	_	_
+6	tämä	_	PRON	_	_	7	det	_	_
+7	tytönhupakko	_	NOUN	_	_	8	nsubj	_	_
+8	kehtasi	_	VERB	_	_	2	ccomp	_	_
+9	tehdä	_	VERB	_	_	8	xcomp	_	_
+10	hänestä	_	PRON	_	_	9	obj	_	_
+11	hölmön	_	NOUN	_	_	9	obl	_	_
+12	luokan	_	NOUN	_	_	9	obl	_	_
+13	edessä	_	ADP	_	_	12	case	_	_
+14	.	_	PUNCT	_	_	2	punct	_	_
+
+# äänivyöry , joka hänellä oli valitsijamiehistössä , peitti voiton kapeuden , joka perustui vain 43 prosenttiin kaikista äänistä .
+1	äänivyöry	_	NOUN	_	_	8	nsubj	_	_
+2	,	_	PUNCT	_	_	4	punct	_	_
+3	joka	_	PRON	_	_	5	nsubj	_	_
+4	hänellä	_	PRON	_	_	1	nmod	_	_
+5	oli	_	AUX	_	_	4	cop	_	_
+6	valitsijamiehistössä	_	NOUN	_	_	4	obl	_	_
+7	,	_	PUNCT	_	_	4	punct	_	_
+8	peitti	_	VERB	_	_	0	root	_	_
+9	voiton	_	NOUN	_	_	10	nmod	_	_
+10	kapeuden	_	NOUN	_	_	8	obj	_	_
+11	,	_	PUNCT	_	_	13	punct	_	_
+12	joka	_	PRON	_	_	13	nsubj	_	_
+13	perustui	_	VERB	_	_	10	acl	_	_
+14	vain	_	ADV	_	_	15	advmod	_	_
+15	43	_	NUM	_	_	16	nummod	_	_
+16	prosenttiin	_	NOUN	_	_	13	obl	_	_
+17	kaikista	_	PRON	_	_	18	det	_	_
+18	äänistä	_	NOUN	_	_	16	nmod	_	_
+19	.	_	PUNCT	_	_	8	punct	_	_
+
+# Yhdysvaltain joukot kantavat nyt atropiinia ja autoinjektoreita ensiapupakkauksissaan käytettäväksi orgaanisen fosfaattisen hermomyrkytyksen sattuessa .
+1	Yhdysvaltain	_	PROPN	_	_	2	nmod	_	_
+2	joukot	_	NOUN	_	_	3	nsubj	_	_
+3	kantavat	_	VERB	_	_	0	root	_	_
+4	nyt	_	ADV	_	_	3	advmod	_	_
+5	atropiinia	_	NOUN	_	_	3	obj	_	_
+6	ja	_	CCONJ	_	_	7	cc	_	_
+7	autoinjektoreita	_	NOUN	_	_	5	conj	_	_
+8	ensiapupakkauksissaan	_	NOUN	_	_	3	obl	_	_
+9	käytettäväksi	_	VERB	_	_	3	advcl	_	_
+10	orgaanisen	_	ADJ	_	_	11	amod	_	_
+11	fosfaattihermomyrkytyksen	_	NOUN	_	_	12	iobj	_	_
+12	sattuessa	_	VERB	_	_	9	obl	_	_
+13	.	_	PUNCT	_	_	3	punct	_	_
+
+# hän saattaa saavuttaa pitkällä aikavälillä käsityönä sen , mitä hän ei voi tehdä pakolla ja välivallalla lyhyessä ajassa .
+1	hän	_	PRON	_	_	3	nsubj	_	_
+2	saattaa	_	AUX	_	_	3	aux	_	_
+3	saavuttaa	_	VERB	_	_	0	root	_	_
+4	pitkällä	_	ADJ	_	_	5	amod	_	_
+5	aikavälillä	_	NOUN	_	_	3	obl	_	_
+6	käsityönä	_	NOUN	_	_	3	obl	_	_
+7	sen	_	PRON	_	_	3	obj	_	_
+8	,	_	PUNCT	_	_	9	punct	_	_
+9	mitä	_	PRON	_	_	13	obj	_	_
+10	hän	_	PRON	_	_	13	nsubj	_	_
+11	ei	_	AUX	_	_	13	aux	_	_
+12	voi	_	AUX	_	_	13	aux	_	_
+13	tehdä	_	VERB	_	_	7	acl	_	_
+14	pakolla	_	NOUN	_	_	13	obl	_	_
+15	ja	_	CCONJ	_	_	16	cc	_	_
+16	välivallalla	_	NOUN	_	_	14	conj	_	_
+17	lyhyessä	_	ADJ	_	_	18	amod	_	_
+18	ajassa	_	NOUN	_	_	13	obl	_	_
+19	.	_	PUNCT	_	_	3	punct	_	_
+
+# on sanottu , että vain hierarkkinen yhteiskunta , jonka yläosassa on vapaa-ajan luokka , voi tuottaa taideteoksia .
+1	on	_	AUX	_	_	2	aux	_	_
+2	sanottu	_	VERB	_	_	0	root	_	_
+3	,	_	PUNCT	_	_	17	punct	_	_
+4	että	_	SCONJ	_	_	17	mark	_	_
+5	vain	_	ADV	_	_	7	advmod	_	_
+6	hierarkkinen	_	ADJ	_	_	7	amod	_	_
+7	yhteiskunta	_	NOUN	_	_	17	nsubj	_	_
+8	,	_	PUNCT	_	_	14	punct	_	_
+9	jonka	_	PRON	_	_	10	nmod	_	_
+10	yläosassa	_	NOUN	_	_	14	nsubj	_	_
+11	on	_	AUX	_	_	14	cop	_	_
+12	vapaa	_	NOUN	_	_	13	compound	_	_
+13	-ajan	_	NOUN	_	_	14	nmod	_	_
+14	luokka	_	NOUN	_	_	7	nmod	_	_
+15	,	_	PUNCT	_	_	14	punct	_	_
+16	voi	_	AUX	_	_	17	aux	_	_
+17	tuottaa	_	VERB	_	_	2	ccomp	_	_
+18	taideteoksia	_	NOUN	_	_	17	obj	_	_
+19	.	_	PUNCT	_	_	3	punct	_	_
+
+# hänen nerokas selityksensä , jonka mukaan hän ei olisi polttanut kirkkoa , jos hän ei olisi uskonut piispan olevan siellä .
+1	hänen	_	PRON	_	_	3	nmod:poss	_	_
+2	nerokas	_	ADJ	_	_	3	amod	_	_
+3	selityksensä	_	NOUN	_	_	0	root	_	_
+4	,	_	PUNCT	_	_	10	punct	_	_
+5	jonka	_	PRON	_	_	10	obl	_	_
+6	mukaan	_	ADP	_	_	5	case	_	_
+7	hän	_	PRON	_	_	10	nsubj	_	_
+8	ei	_	AUX	_	_	10	aux	_	_
+9	olisi	_	AUX	_	_	10	aux	_	_
+10	polttanut	_	VERB	_	_	3	acl	_	_
+11	kirkkoa	_	NOUN	_	_	10	obj	_	_
+12	,	_	PUNCT	_	_	17	punct	_	_
+13	jos	_	SCONJ	_	_	17	mark	_	_
+14	hän	_	PRON	_	_	17	nsubj	_	_
+15	ei	_	AUX	_	_	17	aux	_	_
+16	olisi	_	AUX	_	_	17	aux	_	_
+17	uskonut	_	VERB	_	_	10	ccomp	_	_
+18	piispan	_	NOUN	_	_	20	nsubj	_	_
+19	olevan	_	AUX	_	_	20	cop	_	_
+20	siellä	_	PRON	_	_	17	ccomp	_	_
+21	.	_	PUNCT	_	_	3	punct	_	_
+
