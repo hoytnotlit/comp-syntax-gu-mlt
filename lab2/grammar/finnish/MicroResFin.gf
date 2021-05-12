@@ -14,6 +14,10 @@ param
   Person = P1 | P2 | P3 ;
 
 oper
+
+-----------
+-- NOUNS --
+-----------
   Noun : Type = {s : Number => Case => Str} ;
 
   mkNoun : Str -> Str -> Str -> Str -> Str -> Str -> Noun = \talo,talot,talon,talojen,talossa,taloissa -> {
@@ -24,6 +28,9 @@ oper
     } ;
     
   -- TODO http://fl.finnlectura.fi/verkkokielioppi/Morfologia/sivu241.htm
+  -- https://fl.finnlectura.fi/verkkosuomi/Morfologia/sivu214.htm
+  -- http://jkorpela.fi/suomi/sijataivutus.html
+  -- https://en.wikipedia.org/wiki/Finnish_grammar#Irregular_forms
   regNoun : Str -> Noun = \sg -> mkNoun sg (sg + "t") (sg + "n") 
           (case last sg of { 
            "o" => sg + "jen" ;
@@ -59,39 +66,34 @@ oper
     -- TODO mies, koira, omena, poika, puu, tietokone, veri
     } ;
 
-  Adjective : Type = {s : Number => Degree => Case => Str} ;
+----------------
+-- ADJECTIVES --
+----------------
+-- I removed Degree because it messed up my AdjCN function ??
 
-  mkAdj : Str -> Str -> Str -> Str -> Str -> Str -> 
-          Str -> Str -> Str -> Str -> Str -> Str -> Adjective =
-                             \iso,ison,isompi,isomman,isoin,isoimman,
-                              isot,isojen,isommat,isompien,isoimmat,isoimpien-> {
+  --Adjective : Type = {s : Number => Degree => Case => Str} ;
+  Adjective : Type = {s : Number => Case => Str} ;
+
+  mkAdj : Str -> Str -> Str -> Str -> Str -> Str -> Adjective =
+                             \iso,isot,ison,isojen,isossa,isoissa-> {
     s = table {
-        Sg => table {
-          Pos => table { Nom => iso ; Gen => ison ; Ins => "TODO" } ;
-          Cmp => table { Nom => isompi ; Gen => isomman ; Ins => "TODO" } ; 
-          Sup => table { Nom => isoin ; Gen => isoimman ; Ins => "TODO" }
-        } ; 
-        Pl => table {
-          Pos => table { Nom => isot ; Gen => isojen ; Ins => "TODO" } ;
-          Cmp => table { Nom => isommat ; Gen => isompien ; Ins => "TODO" } ; 
-          Sup => table { Nom => isoimmat ; Gen => isoimpien ; Ins => "TODO" }
-        }
+      Sg => table {Nom => iso ; Gen => ison ; Ins => isossa } ;
+      Pl => table {Nom => isot ; Gen => isojen ; Ins => isoissa }
       } ;
     } ;
 
-  irregAdj : (hyvä,hyvän,parempi,paremman,paras,parhaan,hyvät,hyvien,paremmat,parempien,parhaat,parhaiden : Str) -> Adjective =
-   \hyvä,hyvän,parempi,paremman,paras,parhaan,hyvät,hyvien,paremmat,parempien,parhaat,parhaiden
-       -> mkAdj hyvä hyvän parempi paremman paras parhaan
-      hyvät hyvien paremmat parempien parhaat parhaiden ;
+  irregAdj : (sg,hyvän,parempi,paremman,paras,parhaan,hyvät,hyvien,paremmat,parempien,parhaat,parhaiden : Str) -> Adjective =
+   \sg,hyvän,parempi,paremman,paras,parhaan,hyvät,hyvien,paremmat,parempien,parhaat,parhaiden
+       -> mkAdj sg (sg + "t") (sg + "n") (sg + "jen") (sg + "ssa") (sg + "issa") ;
   
   smartAdj : Str -> Adjective = \sg -> case sg of {
-    keltai + ("nen") => mkAdj sg (keltai + "sen") (keltai + "sempi") (keltai + "semman") (keltai + "sin") (keltai + "simman") 
-                (keltai + "set") (keltai + "sten") (keltai + "semmat") (keltai + "sempien") (keltai + "simmat") (keltai + "simpien") ; 
-    _ => mkAdj sg (sg + "n") (sg + "mpi") (sg + "mman") (sg + "in") (sg + "imman") 
-                (sg + "t") (sg + "jen") (sg + "mmat") (sg + "mpien") (sg + "immat") (sg + "impien") 
+    keltai + ("nen") => mkAdj sg  (keltai + "set") (keltai + "sen") (keltai + "sten") (keltai + "sessa") (keltai + "sissa") ; 
+    _ => mkAdj sg (sg + "t") (sg + "n") (sg + "jen") (sg + "ssa") (sg + "issa") 
     } ;
 
-
+-----------
+-- VERBS --
+-----------
 -- juosta minä juoksen, sinä juokset, hän juoksee, me juoksemme, te juoksette, he juoksevat
   --Verb : Type = {s : VForm => Str} ;
   Verb : Type = {s : Number => Person => Str} ;

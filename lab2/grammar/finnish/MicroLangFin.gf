@@ -6,44 +6,71 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
 -----------------------------------------------------
 
   lincat
-    Utt = {s : Str} ;
-    
-    S  = {s : Str} ;
-    VP = {verb : Verb ; compl : Str} ; ---s special case of Mini
-    Comp = {s : Str} ;
-    AP = Adjective ;
-    CN = Noun ;
-    NP = {s : Case => Str ; a : Agreement} ;
-    Pron = {s : Case => Str ; a : Agreement} ;
-    Det = {s : Str ; n : Number} ;
-    Prep = {s : Str} ;
     V = Verb ;
     V2 = Verb2 ;
     A = Adjective ;
     N = Noun ;
+
+    -- copied from Eng
+
+    Det = {s : Str ; n : Number} ;
+    Prep = {s : Str} ;
     Adv = {s : Str} ;
+    Pron = {s : Case => Str ; a : Agreement} ;
+
+    Utt = {s : Str} ;
+    S  = {s : Str} ;
+    VP = {verb : Verb ; compl : Str} ; 
+    Comp = {s : Str} ;
+    AP = Adjective ;
+    CN = Noun ;
+    NP = {s : Case => Str ; a : Agreement} ;
+
 
   lin
     UttS s = s ;
-      
+
+    UseN n = n ;
+
+    PositA a = a ;
+
+    AdjCN ap cn = {
+      s = table {Sg => table {  Nom => ap.s ! Sg ! Nom ++ cn.s ! Sg ! Nom ; 
+                                Gen => ap.s ! Sg ! Gen ++ cn.s ! Sg ! Gen ; 
+                                Ins => ap.s ! Sg ! Ins ++ cn.s ! Sg ! Ins };  
+                Pl => table {   Nom => ap.s ! Pl ! Nom ++ cn.s ! Pl ! Nom ; 
+                                Gen => ap.s ! Pl ! Gen ++ cn.s ! Pl ! Gen   ; 
+                                Ins => ap.s ! Pl ! Ins ++ cn.s ! Pl ! Ins } }
+    } ;
+    
+    -- WHAT
     UseV v = {
       verb = v ;
       compl = [] ;
-      } ;
-      
+    } ;
+    
+    -- WHAT
+    PredVPS np vp = {
+      s = np.s ! Nom ++ vp.verb.s ! Sg ! P1 ++ vp.compl
+    } ;
+
     AdvVP vp adv =
       vp ** {compl = vp.compl ++ adv.s} ;
       
     UsePron p = p ;
             
-    a_Det = {s = pre {"a"|"e"|"i"|"o" => "an" ; _ => "a"} ; n = Sg} ; --- a/an can get wrong
-    aPl_Det = {s = "" ; n = Pl} ;
-    the_Det = {s = "the" ; n = Sg} ;
-    thePl_Det = {s = "the" ; n = Pl} ;
-    
-    UseN n = n ;
-
-    PositA a = a ;
+    he_Pron = {
+      s = table {Nom => "hän" ; Acc => "hänen"} ;
+      a = Agr Sg ;
+    } ;
+    she_Pron = {
+      s = table {Nom => "hän" ; Acc => "hänen"} ;
+      a = Agr Sg ;
+    } ;
+    they_Pron = {
+      s = table {Nom => "he" ; Acc => "heidän"} ;
+      a = Agr Pl ;
+    } ;
 
 -----------------------------------------------------
 ---------------- Lexicon part -----------------------
