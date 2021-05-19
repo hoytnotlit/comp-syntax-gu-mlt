@@ -15,9 +15,32 @@ param
 
 oper
 
+
+-------------
+-- ADVERBS --
+-------------
+  Adverb : Type = {s : Str} ;
+
+  mkAdv : Str -> Adverb = \x -> {
+    s = x
+    } ;
+
+-------------
+-- PRONOUNS--
+-------------
+
+  Pronoun : Type = {s : Case => Str; p : Person ; n : Number} ;
+
+  mkPron : Str -> Str -> Str -> Number -> Pronoun = \hän,hänessä,hänet,num -> {
+    s = table {Nom => hän ; Gen => hänet ; Ins => hänessä } ; -- NOTE Gen is Acc
+    n = num ;
+    p = P3
+    } ;
+
 -----------
 -- NOUNS --
 -----------
+
   Noun : Type = {s : Number => Case => Str} ;
 
   mkNoun : Str -> Str -> Str -> Str -> Str -> Str -> Noun = \talo,talot,talon,talojen,talossa,taloissa -> {
@@ -98,6 +121,8 @@ oper
   --Verb : Type = {s : VForm => Str} ;
   Verb : Type = {s : Number => Person => Str} ;
 
+  be_Verb : Verb = mkVerb "olla" "olen" "olet" "on" "olemme" "olette" "ovat" ;
+
   mkVerb : (juosta,juoksen,juokset,juoksee,juoksemme,juoksette,juoksevat : Str) -> Verb
     = \juosta,juoksen,juokset,juoksee,juoksemme,juoksette,juoksevat -> {
     s = table {
@@ -138,7 +163,8 @@ oper
       --in mkVerb inf (verb.s ! PresSg3) past pastpart (verb.s ! PresPart) ;   
 
   -- two-place verb with "case" as preposition; for transitive verbs, c=[]
-  Verb2 : Type = Verb ** {c : Str} ;
+  --Verb2 : Type = Verb ** {c : Str} ;
+  Verb2 : Type = {s : Number => Person => Str} ;
 
   --be_Verb : Verb = mkVerb "are" "is" "was" "been" "being" ; ---s to be generalized
 

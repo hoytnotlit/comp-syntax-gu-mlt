@@ -1,6 +1,8 @@
 --# -path=.:../abstract
 concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
 
+-- define that this V2 takes this kind of case (e.g. opettaa)
+
 -----------------------------------------------------
 ---------------- Grammar part -----------------------
 -----------------------------------------------------
@@ -10,25 +12,41 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     V2 = Verb2 ;
     A = Adjective ;
     N = Noun ;
+    Pron = Pronoun ;
+    Adv = Adverb ;
 
-    -- copied from Eng
-
-    Det = {s : Str ; n : Number} ;
     Prep = {s : Str} ;
-    Adv = {s : Str} ;
-    Pron = {s : Case => Str ; a : Agreement} ;
+    Det = {s : Str ; n : Number} ;
 
     Utt = {s : Str} ;
     S  = {s : Str} ;
-    VP = {verb : Verb ; compl : Str} ; 
-    Comp = {s : Str} ;
     AP = Adjective ;
     CN = Noun ;
-    NP = {s : Case => Str ; a : Agreement} ;
+    VP = {verb :  Number => Person => Str ; compl : Str} ; -- verb: Verb
+    Comp = {s : Str} ;
+    --NP = {s : Case => Str } ;
+    --NP = {s : Case => Str; p : Person ; n : Number; g : Gender} ;
+    NP = {s : Case => Str ; p: Person ; n : Number } ;
 
 
   lin
     UttS s = s ;
+
+    -- PredVPS : NP -> VP -> S ;
+    -- NP = {s : Case => Str } ;
+    --VP = {verb :  Number => Person => Str ; compl : Str} ; 
+
+    -- I buy potatoes
+    -- Minä ostan perunoita
+    PredVPS np vp = {
+      s = np.s ! Nom ++ vp.verb ! np.n ! np.p ++ vp.compl
+    };
+
+------------------------
+-- NOUNS + ADJECTIVES --
+------------------------
+
+    UttNP np = { s = np.s ! Nom } ; -- IDK?
 
     UseN n = n ;
 
@@ -43,40 +61,72 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
                                 Ins => ap.s ! Pl ! Ins ++ cn.s ! Pl ! Ins } }
     } ;
     
-    -- WHAT
-    UseV v = {
-      verb = v ;
-      compl = [] ;
-    } ;
+    --CompAP : AP -> Comp ;
+    CompAP ap = {s = ap.s ! Sg ! Nom }; -- TODO -sti
+
+    --DetCN : Det -> CN -> NP ;
+    --NP = {s : Case => Str ; p: Person ; n : Number } ;
+    --Noun : Type = {s : Number => Case => Str} ;
+    --DetCN det cn = cn;
+
+-----------
+-- VERBS --
+-----------
+    -- Verb : Type = {s : Number => Person => Str} ;
     
-    -- WHAT
-    PredVPS np vp = {
-      s = np.s ! Nom ++ vp.verb.s ! Sg ! P1 ++ vp.compl
+    UseV v = {
+      verb = v.s ; -- v
+      compl = [] ;
+      } ;
+
+    --ComplV2 : V2 -> NP -> VP
+    ComplV2 v2 np = {
+      verb = v2.s ;
+      compl = np.s ! Gen ; -- Acc
     } ;
 
-    AdvVP vp adv =
-      vp ** {compl = vp.compl ++ adv.s} ;
+    --AdvVP : VP -> Adv -> VP ;
+    AdvVP vp adv = {
+      verb = vp.verb ;
+      compl = vp.compl ++ adv.s
+    } ;
+
+    --UseComp : Comp -> VP ;
+    -- du är grön
+    -- de är gröna
+
+    -- sinä olet vihreä (Nom)
+    -- he ovat vihreitä (Part)
+
+    --UseComp comp = {
+      --verb = be_Verb;
+      --compl = comp.s
+    --};
+
       
-    UsePron p = p ;
-            
-    he_Pron = {
-      s = table {Nom => "hän" ; Acc => "hänen"} ;
-      a = Agr Sg ;
-    } ;
-    she_Pron = {
-      s = table {Nom => "hän" ; Acc => "hänen"} ;
-      a = Agr Sg ;
-    } ;
-    they_Pron = {
-      s = table {Nom => "he" ; Acc => "heidän"} ;
-      a = Agr Pl ;
-    } ;
+--------------
+-- PRONOUNS --
+--------------
+    --UsePron pron = pron ;
+
+    UsePron pron = {
+      s = table {
+        Nom => pron.s ! Nom ;
+        Gen => pron.s ! Gen ;
+        Ins => pron.s ! Ins } ;
+      p = pron.p ;
+      n = pron.n
+    } ; 
+
+lin he_Pron = mkPron "hän" "hänessä" "hänet" Sg ;
+lin she_Pron = he_Pron ;
+lin they_Pron = mkPron "he" "heissä" "heidät" Pl ;
 
 -----------------------------------------------------
 ---------------- Lexicon part -----------------------
 -----------------------------------------------------
 
--- lin already_Adv = mkAdv "already" ;
+lin already_Adv = mkAdv "jo" ;
 lin animal_N = mkN "eläin" ;
 lin apple_N = mkN "omena" ;
 lin baby_N = mkN "vauva" ;
@@ -134,7 +184,7 @@ lin man_N = mkN "mies" ;
 lin milk_N = mkN "maito" ;
 lin music_N = mkN "musiikki" ;
 lin new_A = mkA "uusi" ;
--- lin now_Adv = mkAdv "now" ;
+lin now_Adv = mkAdv "nyt" ;
 lin old_A = mkA "vanha" ;
 -- lin paris_PN = mkPN "Paris" ;
 lin play_V = mkV "leikkiä" ;
@@ -150,7 +200,7 @@ lin sleep_V = mkV "nukkua" ;
 lin small_A = mkA "pieni" ;
 lin star_N = mkN "tähti" ;
 lin swim_V = mkV "uida" ;
-lin teach_V2 = mkV2 "opettaa" ;
+lin teach_V2 = mkV2 "opettaa" ; -- TODO define here the case that it takes
 lin train_N = mkN "juna" ;
 lin travel_V = mkV "matkustaa" ;
 lin tree_N = mkN "puu" ;
