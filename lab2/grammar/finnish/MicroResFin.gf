@@ -1,5 +1,3 @@
--- present tense and 3-4 cases is enough!
-
 resource MicroResFin = open Prelude in {
 
 param
@@ -28,7 +26,6 @@ oper
 -------------
 -- PRONOUNS--
 -------------
-
   Pronoun : Type = {s : Case => Str; p : Person ; n : Number} ;
 
   mkPron : Str -> Str -> Str -> Number -> Pronoun = \hän,hänessä,hänet,num -> {
@@ -40,7 +37,6 @@ oper
 -----------
 -- NOUNS --
 -----------
-
   Noun : Type = {s : Number => Case => Str} ;
 
   mkNoun : Str -> Str -> Str -> Str -> Str -> Str -> Noun = \talo,talot,talon,talojen,talossa,taloissa -> {
@@ -117,62 +113,64 @@ oper
 -----------
 -- VERBS --
 -----------
--- juosta minä juoksen, sinä juokset, hän juoksee, me juoksemme, te juoksette, he juoksevat
-  --Verb : Type = {s : VForm => Str} ;
   Verb : Type = {s : Number => Person => Str} ;
+  -- two-place verb with "case" as preposition; for transitive verbs, c=[]
+  Verb2 : Type = {s : Number => Person => Str} ;
+  --Verb2 : Type = {s : Number => Person => Str; c : Case } ;
 
   be_Verb : Verb = mkVerb "olla" "olen" "olet" "on" "olemme" "olette" "ovat" ;
 
   mkVerb : (juosta,juoksen,juokset,juoksee,juoksemme,juoksette,juoksevat : Str) -> Verb
     = \juosta,juoksen,juokset,juoksee,juoksemme,juoksette,juoksevat -> {
     s = table {
-        Sg => table {
-          P1 => juoksen ;
-          P2 => juokset ; 
-          P3 => juoksee
-        } ;
-        Pl => table {
-          P1 => juoksemme ;
-          P2 => juoksette ; 
-          P3 => juoksevat
-        } 
+        Sg => table { P1 => juoksen ; P2 => juokset ; P3 => juoksee } ;
+        Pl => table { P1 => juoksemme ; P2 => juoksette ; P3 => juoksevat }
       }
     } ;
 
   regVerb : (inf : Str) -> Verb = \inf ->
     mkVerb inf (inf + "n") (inf + "t") (inf) (inf + "mme") (inf + "tte") (inf + "vat") ;
-
-  regVerb2 : (inf,sg3 : Str) -> Verb = \inf,sg3 ->
-    mkVerb inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (inf + "vat") ;
-
-  -- regular verbs with predictable variations
+  
+  idkVerb : (inf,sg3 : Str) -> Verb = \inf,sg3 ->
+      mkVerb inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (inf + "vat") ;
+  
   smartVerb : Str -> Verb = \inf -> case inf of {
-    juo + ("da" | "dä") => regVerb juo ;
-    kävel + ("lä") => regVerb2 (kävel + "e") (kävel + "ee");
-    leik + ("kiä") => regVerb2 (leik + "i") (leik + "kii");
-    ope + ("t") + ("taa") => regVerb2 (ope + "ta") inf;
-    os + ("taa") => regVerb2 (os + "ta") inf;
-    tu + ("lla") => regVerb2 (tu + "le") (tu + "lee");
-     _ => regVerb inf
-     } ;
-
-  -- normal irregular verbs e.g. drink,drank,drunk
-  --irregVerb : (inf,past,pastpart : Str) -> Verb =
-    --\inf,past,pastpart ->
-      --let verb = smartVerb inf
-      --in mkVerb inf (verb.s ! PresSg3) past pastpart (verb.s ! PresPart) ;   
-
-  -- two-place verb with "case" as preposition; for transitive verbs, c=[]
-  --Verb2 : Type = Verb ** {c : Str} ;
-  Verb2 : Type = {s : Number => Person => Str} ;
-
-  --be_Verb : Verb = mkVerb "are" "is" "was" "been" "being" ; ---s to be generalized
-
-
----s a very simplified verb agreement function for Micro
-  agr2vform : Agreement -> VForm = \a -> case a of {
-    Agr Sg => PresSg3 ;
-    Agr Pl => Inf
+    juo + ("sta") => regVerb (juo + "kse") ;
+    ui + ("da") => regVerb ui ;
+    kävel + ("lä") => idkVerb (kävel + "e") (kävel + "ee");
+    leik + ("kiä") => idkVerb (leik + "i") (leik + "kii");
+    ope + ("t") + ("taa") => idkVerb (ope + "ta") inf;
+    os + ("taa") => idkVerb (os + "ta") inf;
+    tu + ("lla") => idkVerb (tu + "le") (tu + "lee");
+      _ => regVerb inf
     } ;
 
+  mkVerb2 : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Case -> Verb2
+    = \juosta,juoksen,juokset,juoksee,juoksemme,juoksette,juoksevat,c -> {
+    s = table {
+        Sg => table { P1 => juoksen ; P2 => juokset ; P3 => juoksee } ;
+        Pl => table { P1 => juoksemme ; P2 => juoksette ; P3 => juoksevat }
+      }
+    -- c = c --TODO why isnt it working??
+    } ;
+
+  regVerb2 : Str -> Case -> Verb = \inf,c ->
+    mkVerb2 inf (inf + "n") (inf + "t") inf (inf + "mme") (inf + "tte") (inf + "vat") c ;
+
+  idkVerb2 : Str -> Str -> Case -> Verb = \inf,sg3,c ->
+    mkVerb2 inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (inf + "vat") c ;
+
+  idk2Verb2 : Str -> Str -> Str -> Case -> Verb = \inf,sg3,rename,c ->
+    mkVerb2 inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (rename + "vat") c ; 
+    -- TODO what was the remove last letter + other function?
+
+  smartVerb2 : Str -> Case -> Verb2 = \inf,c -> case inf of {
+    juo + ("da" | "dä") => regVerb2 juo c ;
+    kävel + ("lä") => idkVerb2 (kävel + "e") (kävel + "ee") c ;
+    ope + ("t") + ("taa") => idk2Verb2 (ope + "ta") inf (ope + "tta")  c ;
+    ta + ("p") + ("paa") => idk2Verb2 (ta + "pa") inf (ta + "ppa") c ;
+    ri + ("k") + ("koa") => idk2Verb2 (ri + "ko") inf (ri + "kko") c ;
+    os + ("taa") => idkVerb2 (os + "ta") inf c ;
+     _ => regVerb2 inf c
+     } ;
 }

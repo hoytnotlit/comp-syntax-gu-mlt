@@ -6,7 +6,6 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
 -----------------------------------------------------
 ---------------- Grammar part -----------------------
 -----------------------------------------------------
-
   lincat
     V = Verb ;
     V2 = Verb2 ;
@@ -15,27 +14,23 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     Pron = Pronoun ;
     Adv = Adverb ;
 
-    Prep = {s : Str; c : Case} ;
+    Prep = {s : Str} ; -- for appraoch 2
+    --Prep = {s : Str; c : Case} ; -- for approach 1
     Det = {s : Str ; n : Number} ;
 
     Utt = {s : Str} ;
     S  = {s : Str} ;
     AP = Adjective ;
     CN = Noun ;
-    VP = {verb :  Number => Person => Str ; compl : Str} ; -- verb: Verb
+    VP = {verb :  Number => Person => Str ; compl : Str} ;
     Comp = {s : Str} ;
     NP = {s : Case => Str ; p: Person ; n : Number } ;
 
-
   lin
+    --  UttS : S -> Utt ;
     UttS s = s ;
 
     -- PredVPS : NP -> VP -> S ;
-    -- NP = {s : Case => Str } ;
-    --VP = {verb :  Number => Person => Str ; compl : Str} ; 
-
-    -- I buy potatoes
-    -- Minä ostan perunoita
     PredVPS np vp = {
       s = np.s ! Nom ++ vp.verb ! np.n ! np.p ++ vp.compl
     };
@@ -43,84 +38,90 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
 ------------------------
 -- NOUNS + ADJECTIVES --
 ------------------------
-
+    -- UttNP : NP -> Utt ;
     UttNP np = { s = np.s ! Nom } ; -- IDK?
 
+    -- UseN : N -> CN ;
     UseN n = n ;
 
+    -- PositA : A -> AP ;
     PositA a = a ;
 
+    -- AdjCN : AP -> CN -> CN ;
     AdjCN ap cn = {
       s = table {Sg => table {  Nom => ap.s ! Sg ! Nom ++ cn.s ! Sg ! Nom ; 
                                 Gen => ap.s ! Sg ! Gen ++ cn.s ! Sg ! Gen ; 
-                                Ins => ap.s ! Sg ! Ins ++ cn.s ! Sg ! Ins };  
+                                Ins => ap.s ! Sg ! Ins ++ cn.s ! Sg ! Ins } ;  
                 Pl => table {   Nom => ap.s ! Pl ! Nom ++ cn.s ! Pl ! Nom ; 
-                                Gen => ap.s ! Pl ! Gen ++ cn.s ! Pl ! Gen   ; 
+                                Gen => ap.s ! Pl ! Gen ++ cn.s ! Pl ! Gen ; 
                                 Ins => ap.s ! Pl ! Ins ++ cn.s ! Pl ! Ins } }
     } ;
     
     --CompAP : AP -> Comp ;
-    CompAP ap = {s = ap.s ! Sg ! Nom }; -- TODO -sti
+    CompAP ap = {s = ap.s ! Sg ! Nom } ; -- TODO -sti Translatiivi (what??)
 
     --DetCN : Det -> CN -> NP ;
-    --NP = {s : Case => Str ; p: Person ; n : Number } ;
-    --Noun : Type = {s : Number => Case => Str} ;
-    DetCN det cn = {s = cn.s ! det.n; p=P3; n = det.n };
+    DetCN det cn = {s = cn.s ! det.n; p = P3; n = det.n } ;
 
-    -- copied from Eng
-    a_Det = {s = pre {"a"|"e"|"i"|"o" => "an" ; _ => "a"} ; n = Sg} ; --- a/an can get wrong
+    -- these determiners do not exist in Finnish therefor I have left "s" empty
+    a_Det = {s = "" ; n = Sg} ;
     aPl_Det = {s = "" ; n = Pl} ;
-    the_Det = {s = "the" ; n = Sg} ;
-    thePl_Det = {s = "the" ; n = Pl} ;
+    the_Det = {s = "" ; n = Sg} ;
+    thePl_Det = {s = "" ; n = Pl} ;
 
+-------------
+-- ADVERBS --
+-------------
     -- PrepNP : Prep -> NP -> Adv ;
-    -- Adverb : Type = {s : Str} ;
-    PrepNP prep np = { s = np.s ! prep.c };
+    -- approach 1 uses cases 
+    -- PrepNP prep np = { s = np.s ! prep.c } ;
 
-    in_Prep = {s = "in"; c = Ins };
-    --on_Prep = {c = } ;
-    --with_Prep = {c = } ;
+    --in_Prep = {s = "in"; c = Ins }; -- e.g. he is in the house -> hän on talossa 
+    --on_Prep = {s = "on"; c = Ade } ; - e.g. on the roof -> katolla
+    --with_Prep = {s = "with"; c = Ade } ; -- e.g. a house with a green roof -> talo vihreällä katolla
+
+    -- approach 2 uses postpositions and works slightly better
+    PrepNP prep np = { s = np.s ! Gen ++ prep.s } ;
+
+    in_Prep = {s = "sisällä"} ;
+    on_Prep = {s = "päällä"} ;
+    with_Prep = {s = "kanssa"} ;
 
 -----------
 -- VERBS --
 -----------
-    -- Verb : Type = {s : Number => Person => Str} ;
-    
+    -- UseV : V -> VP ;
     UseV v = {
-      verb = v.s ; -- v
+      verb = v.s ;
       compl = [] ;
       } ;
 
-    --ComplV2 : V2 -> NP -> VP
+    -- ComplV2 : V2 -> NP -> VP
     ComplV2 v2 np = {
       verb = v2.s ;
-      compl = np.s ! Gen ; -- Acc
+      compl = np.s ! Gen ; -- TODO Acc
     } ;
 
-    --AdvVP : VP -> Adv -> VP ;
+    -- AdvVP : VP -> Adv -> VP ;
     AdvVP vp adv = {
       verb = vp.verb ;
       compl = vp.compl ++ adv.s
     } ;
 
-    --UseComp : Comp -> VP ;
+    -- UseComp : Comp -> VP ;
     -- du är grön
     -- de är gröna
-
     -- sinä olet vihreä (Nom)
     -- he ovat vihreitä (Part)
-
-    --UseComp comp = {
-      --verb = be_Verb;
-      --compl = comp.s
-    --};
-
+    UseComp comp = {
+      verb = be_Verb.s;
+      compl = comp.s -- IDK??? TODO need number here (but how??)
+    };
       
 --------------
 -- PRONOUNS --
 --------------
-    --UsePron pron = pron ;
-
+    -- UsePron : Pron -> NP ;
     UsePron pron = {
       s = table {
         Nom => pron.s ! Nom ;
@@ -154,8 +155,8 @@ lin boat_N = mkN "vene" ;
 lin book_N = mkN "kirja" ;
 lin boy_N = mkN "poika" ;
 lin bread_N = mkN "leipä" ;
-lin break_V2 = mkV2 "rikkoa" ;
-lin buy_V2 = mkV2 "ostaa" ;
+lin break_V2 = mkV2 "rikkoa" Nom ;
+lin buy_V2 = mkV2 "ostaa" Nom ;
 lin car_N = mkN "auto" ;
 lin cat_N = mkN "kissa" ;
 lin child_N = mkN "lapsi" ;
@@ -169,9 +170,9 @@ lin computer_N = mkN "tietokone" ;
 lin cow_N = mkN "lehmä" ;
 lin dirty_A = mkA "likainen" ;
 lin dog_N = mkN "koira" ;
-lin drink_V2 = mkV2 "juoda" ;
-lin eat_V2 = mkV2 "syödä" ;
-lin find_V2 = mkV2 "löytää" ;
+lin drink_V2 = mkV2 "juoda" Nom ;
+lin eat_V2 = mkV2 "syödä" Nom ;
+lin find_V2 = mkV2 "löytää" Nom ;
 lin fire_N = mkN "tuli" ;
 lin fish_N = mkN "kala" ;
 lin flower_N = mkN "kukka" ;
@@ -187,11 +188,11 @@ lin hot_A = mkA "kuuma" ;
 lin house_N = mkN "talo" ;
 -- lin john_PN = mkPN "John" ;
 lin jump_V = mkV "hypätä" ;
-lin kill_V2 = mkV2 "tappaa" ;
+lin kill_V2 = mkV2 "tappaa" Nom ;
 -- lin know_VS = mkVS (mkV "know" "knew" "known") ;
 lin language_N = mkN "kieli" ;
 lin live_V = mkV "elää" ;
-lin love_V2 = mkV2 "rakastaa" ;
+lin love_V2 = mkV2 "rakastaa" Nom ;
 lin man_N = mkN "mies" ;
 lin milk_N = mkN "maito" ;
 lin music_N = mkN "musiikki" ;
@@ -200,24 +201,24 @@ lin now_Adv = mkAdv "nyt" ;
 lin old_A = mkA "vanha" ;
 -- lin paris_PN = mkPN "Paris" ;
 lin play_V = mkV "leikkiä" ;
-lin read_V2 = mkV2 "lukea" ;
+lin read_V2 = mkV2 "lukea" Nom ;
 lin ready_A = mkA "valmis" ;
 lin red_A = mkA "punainen" ;
 lin river_N = mkN "joki" ;
 lin run_V = mkV "juosta" ;
 lin sea_N = mkN "meri" ;
-lin see_V2 = mkV2 "nähdä" ;
+lin see_V2 = mkV2 "nähdä" Nom ;
 lin ship_N = mkN "alus" ;
 lin sleep_V = mkV "nukkua" ;
 lin small_A = mkA "pieni" ;
 lin star_N = mkN "tähti" ;
 lin swim_V = mkV "uida" ;
-lin teach_V2 = mkV2 "opettaa" ; -- TODO define here the case that it takes
+lin teach_V2 = mkV2 "opettaa" Nom ; -- TODO define here the case that it takes
 lin train_N = mkN "juna" ;
 lin travel_V = mkV "matkustaa" ;
 lin tree_N = mkN "puu" ;
-lin understand_V2 = mkV2 "ymmärtää" ;
-lin wait_V2 = mkV2 "odottaa" ;
+lin understand_V2 = mkV2 "ymmärtää" Nom ;
+lin wait_V2 = mkV2 "odottaa" Nom ;
 lin walk_V = mkV "kävellä" ;
 lin warm_A = mkA "lämmin" ;
 lin water_N = mkN "vesi" ;
@@ -251,14 +252,8 @@ oper
     } ;
 
   mkV2 = overload {
-    mkV2 : Str -> V2          -- predictable verb with direct object, e.g. "wash"
-      = \s   -> lin V2 (smartVerb s ** {c = []}) ;
-    mkV2 : Str  -> Str -> V2  -- predictable verb with preposition, e.g. "wait - for"
-      = \s,p -> lin V2 (smartVerb s ** {c = p}) ;
-    mkV2 : V -> V2            -- any verb with direct object, e.g. "drink"
-      = \v   -> lin V2 (v ** {c = []}) ;
-    mkV2 : V -> Str -> V2     -- any verb with preposition
-      = \v,p -> lin V2 (v ** {c = p}) ;
+    mkV2 : Str -> Case -> V2
+      = \s,c   -> lin V2 (smartVerb2 s c) ;
     } ;
 
 }
