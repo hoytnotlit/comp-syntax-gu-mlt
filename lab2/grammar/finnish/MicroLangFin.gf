@@ -1,7 +1,7 @@
 --# -path=.:../abstract
 concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
 
--- define that this V2 takes this kind of case (e.g. opettaa)
+-- TODO define that this V2 takes this kind of case (e.g. opettaa)
 
 -----------------------------------------------------
 ---------------- Grammar part -----------------------
@@ -15,7 +15,7 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     Pron = Pronoun ;
     Adv = Adverb ;
 
-    Prep = {s : Str} ;
+    Prep = {s : Str; c : Case} ;
     Det = {s : Str ; n : Number} ;
 
     Utt = {s : Str} ;
@@ -24,8 +24,6 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     CN = Noun ;
     VP = {verb :  Number => Person => Str ; compl : Str} ; -- verb: Verb
     Comp = {s : Str} ;
-    --NP = {s : Case => Str } ;
-    --NP = {s : Case => Str; p : Person ; n : Number; g : Gender} ;
     NP = {s : Case => Str ; p: Person ; n : Number } ;
 
 
@@ -67,7 +65,21 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     --DetCN : Det -> CN -> NP ;
     --NP = {s : Case => Str ; p: Person ; n : Number } ;
     --Noun : Type = {s : Number => Case => Str} ;
-    --DetCN det cn = cn;
+    DetCN det cn = {s = cn.s ! det.n; p=P3; n = det.n };
+
+    -- copied from Eng
+    a_Det = {s = pre {"a"|"e"|"i"|"o" => "an" ; _ => "a"} ; n = Sg} ; --- a/an can get wrong
+    aPl_Det = {s = "" ; n = Pl} ;
+    the_Det = {s = "the" ; n = Sg} ;
+    thePl_Det = {s = "the" ; n = Pl} ;
+
+    -- PrepNP : Prep -> NP -> Adv ;
+    -- Adverb : Type = {s : Str} ;
+    PrepNP prep np = { s = np.s ! prep.c };
+
+    in_Prep = {s = "in"; c = Ins };
+    --on_Prep = {c = } ;
+    --with_Prep = {c = } ;
 
 -----------
 -- VERBS --
