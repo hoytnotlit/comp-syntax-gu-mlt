@@ -114,9 +114,6 @@ oper
 -- VERBS --
 -----------
   Verb : Type = {s : Number => Person => Str} ;
-  -- two-place verb with "case" as preposition; for transitive verbs, c=[]
-  Verb2 : Type = {s : Number => Person => Str} ;
-  --Verb2 : Type = {s : Number => Person => Str; c : Case } ;
 
   be_Verb : Verb = mkVerb "olla" "olen" "olet" "on" "olemme" "olette" "ovat" ;
 
@@ -145,22 +142,24 @@ oper
       _ => regVerb inf
     } ;
 
+  -- two-place verb with "case" as preposition; for transitive verbs, c=[]
+  Verb2 : Type = {s : Number => Person => Str; c : Case } ;
+
   mkVerb2 : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Case -> Verb2
     = \juosta,juoksen,juokset,juoksee,juoksemme,juoksette,juoksevat,c -> {
     s = table {
         Sg => table { P1 => juoksen ; P2 => juokset ; P3 => juoksee } ;
-        Pl => table { P1 => juoksemme ; P2 => juoksette ; P3 => juoksevat }
-      }
-    -- c = c --TODO why isnt it working??
+        Pl => table { P1 => juoksemme ; P2 => juoksette ; P3 => juoksevat } } ; 
+    c = c
     } ;
 
-  regVerb2 : Str -> Case -> Verb = \inf,c ->
+  regVerb2 : Str -> Case -> Verb2 = \inf,c ->
     mkVerb2 inf (inf + "n") (inf + "t") inf (inf + "mme") (inf + "tte") (inf + "vat") c ;
 
-  idkVerb2 : Str -> Str -> Case -> Verb = \inf,sg3,c ->
+  idkVerb2 : Str -> Str -> Case -> Verb2 = \inf,sg3,c ->
     mkVerb2 inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (inf + "vat") c ;
 
-  idk2Verb2 : Str -> Str -> Str -> Case -> Verb = \inf,sg3,rename,c ->
+  idk2Verb2 : Str -> Str -> Str -> Case -> Verb2 = \inf,sg3,rename,c ->
     mkVerb2 inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (rename + "vat") c ; 
     -- TODO what was the remove last letter + other function?
 
