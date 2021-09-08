@@ -63,12 +63,9 @@ lin
   vomitAction = mkVP (mkV "oksentaa") ;
   sleepAction = mkVP (mkV "nukkua") ;
   undressAction =  mkVP (mkV "riisuutua") ;
-  -- undressAction = mkVP (mkVP take_V2 (mkNP thePl_Det (mkN "clothe"))) (pAdv "off") ;
-  --dressAction = mkVP (mkVP put_V2 (mkNP thePl_Det (mkN "clothe"))) (pAdv "on") ; 
-  dressAction = mkVP (mkV "pukeutua") ; -- (mkNP (mkN "vaatteet")) (pAdv "on") ; -- pukea vaatteet päälle
+  dressAction = mkVP (mkV "pukeutua") ; 
   eatAction = mkVP (mkV "syödä") ;
   drinkAction = mkVP (mkV "juoda") ;
-  --smokeAction = mkVP (mkV "polttaa") ;
   smokeAction = mkVP (mkV "tupakoida") ;
   measureTemperatureAction = mkVP (mkV2 (mkV "mitata")) (mkNP (mkN "kuume")) ;
   measureBloodPressureAction = mkVP (mkV2 (mkV "mitata")) (mkNP (mkN "verenpaine")) ;
@@ -105,7 +102,6 @@ lin
 oper
   pAdv : Str -> Adv = ParadigmsFin.mkAdv ;
 
-  --go_V = mkV "go" "went" "gone" ;
   go_V = mkV "mennä" ;
   stay_V = mkV "jäädä" ;
   need_V2 = mkV2 (mkV "tarvita") ;

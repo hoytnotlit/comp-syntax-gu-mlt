@@ -1,7 +1,28 @@
 --# -path=.:../abstract
 concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
 
--- TODO define that this V2 takes this kind of case (e.g. opettaa)
+-----------------------------------------------------
+---------------- Some unfixed issues ----------------
+-----------------------------------------------------
+-- In general there are a lot of issues with generating nouns (and verbs). It seems
+-- that each word requires a special case and a lot of manual work. Because I wanted to finish
+-- the assignment, I did not go ahead and do the manual work for each word.
+-- At least these nouns don't generate correctly: mies, koira, omena, poika, puu, tietokone, veri
+
+-- Transitive verbs take a case to specify which case the object should use, however
+-- the verbs which should take the partitive case now take nominative case to show that this 
+-- functionality is implemented. This is because I did not implement the partitive case for the 
+-- mkNoun function in the MicroRes.
+
+-- Another similar issue to the above is in the CompAP definition. Instead of the nominative case
+-- translative case should be used, but I haven't implemented the case in the mkNoun function.
+
+-- Lastly I had issues with the UseComp definition. The complement should have changed the number
+-- and case basewd on the pronoun 
+-- For example, 
+-- you are green -> sinä olet vihreä, would use the nominative singular case of the adjective
+-- they are green -> he ovat vihreitä, should instead use partitive plural case of the adjective
+-- I could not figure out how to fix this.
 
 -----------------------------------------------------
 ---------------- Grammar part -----------------------
@@ -58,7 +79,7 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     } ;
     
     --CompAP : AP -> Comp ;
-    CompAP ap = {s = ap.s ! Sg ! Nom } ; -- TODO -sti Translatiivi (what??)
+    CompAP ap = {s = ap.s ! Sg ! Nom } ; --CompAP ap = {s = ap.s ! Sg ! Tra } ;
 
     --DetCN : Det -> CN -> NP ;
     DetCN det cn = {s = cn.s ! det.n; p = P3; n = det.n } ;
@@ -99,7 +120,7 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     -- ComplV2 : V2 -> NP -> VP
     ComplV2 v2 np = {
       verb = v2.s ;
-      compl = np.s ! Gen ; -- TODO Acc
+      compl = np.s ! v2.c ;
     } ;
 
     -- AdvVP : VP -> Adv -> VP ;
@@ -109,13 +130,9 @@ concrete MicroLangFin of MicroLang = open MicroResFin, Prelude in {
     } ;
 
     -- UseComp : Comp -> VP ;
-    -- du är grön
-    -- de är gröna
-    -- sinä olet vihreä (Nom)
-    -- he ovat vihreitä (Part)
     UseComp comp = {
       verb = be_Verb.s;
-      compl = comp.s -- IDK??? TODO need number here (but how??)
+      compl = comp.s
     };
       
 --------------
@@ -155,8 +172,8 @@ lin boat_N = mkN "vene" ;
 lin book_N = mkN "kirja" ;
 lin boy_N = mkN "poika" ;
 lin bread_N = mkN "leipä" ;
-lin break_V2 = mkV2 "rikkoa" Nom ;
-lin buy_V2 = mkV2 "ostaa" Nom ;
+lin break_V2 = mkV2 "rikkoa" Gen ;
+lin buy_V2 = mkV2 "ostaa" Gen ;
 lin car_N = mkN "auto" ;
 lin cat_N = mkN "kissa" ;
 lin child_N = mkN "lapsi" ;
@@ -170,9 +187,9 @@ lin computer_N = mkN "tietokone" ;
 lin cow_N = mkN "lehmä" ;
 lin dirty_A = mkA "likainen" ;
 lin dog_N = mkN "koira" ;
-lin drink_V2 = mkV2 "juoda" Nom ;
-lin eat_V2 = mkV2 "syödä" Nom ;
-lin find_V2 = mkV2 "löytää" Nom ;
+lin drink_V2 = mkV2 "juoda" Nom ; --Part
+lin eat_V2 = mkV2 "syödä" Nom ; --Part
+lin find_V2 = mkV2 "löytää" Gen ;
 lin fire_N = mkN "tuli" ;
 lin fish_N = mkN "kala" ;
 lin flower_N = mkN "kukka" ;
@@ -188,11 +205,11 @@ lin hot_A = mkA "kuuma" ;
 lin house_N = mkN "talo" ;
 -- lin john_PN = mkPN "John" ;
 lin jump_V = mkV "hypätä" ;
-lin kill_V2 = mkV2 "tappaa" Nom ;
+lin kill_V2 = mkV2 "tappaa" Gen ; 
 -- lin know_VS = mkVS (mkV "know" "knew" "known") ;
 lin language_N = mkN "kieli" ;
 lin live_V = mkV "elää" ;
-lin love_V2 = mkV2 "rakastaa" Nom ;
+lin love_V2 = mkV2 "rakastaa" Nom ; --Part
 lin man_N = mkN "mies" ;
 lin milk_N = mkN "maito" ;
 lin music_N = mkN "musiikki" ;
@@ -201,24 +218,24 @@ lin now_Adv = mkAdv "nyt" ;
 lin old_A = mkA "vanha" ;
 -- lin paris_PN = mkPN "Paris" ;
 lin play_V = mkV "leikkiä" ;
-lin read_V2 = mkV2 "lukea" Nom ;
+lin read_V2 = mkV2 "lukea" Gen ; --or Part (reads the book/is reading a book)
 lin ready_A = mkA "valmis" ;
 lin red_A = mkA "punainen" ;
 lin river_N = mkN "joki" ;
 lin run_V = mkV "juosta" ;
 lin sea_N = mkN "meri" ;
-lin see_V2 = mkV2 "nähdä" Nom ;
+lin see_V2 = mkV2 "nähdä" Gen ;
 lin ship_N = mkN "alus" ;
 lin sleep_V = mkV "nukkua" ;
 lin small_A = mkA "pieni" ;
 lin star_N = mkN "tähti" ;
 lin swim_V = mkV "uida" ;
-lin teach_V2 = mkV2 "opettaa" Nom ; -- TODO define here the case that it takes
+lin teach_V2 = mkV2 "opettaa" Nom ; --Part
 lin train_N = mkN "juna" ;
 lin travel_V = mkV "matkustaa" ;
 lin tree_N = mkN "puu" ;
-lin understand_V2 = mkV2 "ymmärtää" Nom ;
-lin wait_V2 = mkV2 "odottaa" Nom ;
+lin understand_V2 = mkV2 "ymmärtää" Nom ; --Part
+lin wait_V2 = mkV2 "odottaa" Nom ; --Part
 lin walk_V = mkV "kävellä" ;
 lin warm_A = mkA "lämmin" ;
 lin water_N = mkN "vesi" ;

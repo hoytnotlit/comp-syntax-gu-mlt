@@ -46,10 +46,6 @@ oper
       }
     } ;
     
-  -- TODO http://fl.finnlectura.fi/verkkokielioppi/Morfologia/sivu241.htm
-  -- https://fl.finnlectura.fi/verkkosuomi/Morfologia/sivu214.htm
-  -- http://jkorpela.fi/suomi/sijataivutus.html
-  -- https://en.wikipedia.org/wiki/Finnish_grammar#Irregular_forms
   regNoun : Str -> Noun = \sg -> mkNoun sg (sg + "t") (sg + "n") 
           (case last sg of { 
            "o" => sg + "jen" ;
@@ -82,15 +78,11 @@ oper
     ve + ("si") => mkNoun sg (ve + "det") (ve + "den") (sg + "en") (ve + "dessä") (ve + "sissä");
     -- default
     _ => regNoun sg
-    -- TODO mies, koira, omena, poika, puu, tietokone, veri
     } ;
 
 ----------------
 -- ADJECTIVES --
 ----------------
--- I removed Degree because it messed up my AdjCN function ??
-
-  --Adjective : Type = {s : Number => Degree => Case => Str} ;
   Adjective : Type = {s : Number => Case => Str} ;
 
   mkAdj : Str -> Str -> Str -> Str -> Str -> Str -> Adjective =
@@ -128,21 +120,20 @@ oper
   regVerb : (inf : Str) -> Verb = \inf ->
     mkVerb inf (inf + "n") (inf + "t") (inf) (inf + "mme") (inf + "tte") (inf + "vat") ;
   
-  idkVerb : (inf,sg3 : Str) -> Verb = \inf,sg3 ->
+  otherVerb : (inf,sg3 : Str) -> Verb = \inf,sg3 ->
       mkVerb inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (inf + "vat") ;
   
   smartVerb : Str -> Verb = \inf -> case inf of {
     juo + ("sta") => regVerb (juo + "kse") ;
     ui + ("da") => regVerb ui ;
-    kävel + ("lä") => idkVerb (kävel + "e") (kävel + "ee");
-    leik + ("kiä") => idkVerb (leik + "i") (leik + "kii");
-    ope + ("t") + ("taa") => idkVerb (ope + "ta") inf;
-    os + ("taa") => idkVerb (os + "ta") inf;
-    tu + ("lla") => idkVerb (tu + "le") (tu + "lee");
+    kävel + ("lä") => otherVerb (kävel + "e") (kävel + "ee");
+    leik + ("kiä") => otherVerb (leik + "i") (leik + "kii");
+    ope + ("t") + ("taa") => otherVerb (ope + "ta") inf;
+    os + ("taa") => otherVerb (os + "ta") inf;
+    tu + ("lla") => otherVerb (tu + "le") (tu + "lee");
       _ => regVerb inf
     } ;
 
-  -- two-place verb with "case" as preposition; for transitive verbs, c=[]
   Verb2 : Type = {s : Number => Person => Str; c : Case } ;
 
   mkVerb2 : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Case -> Verb2
@@ -156,20 +147,19 @@ oper
   regVerb2 : Str -> Case -> Verb2 = \inf,c ->
     mkVerb2 inf (inf + "n") (inf + "t") inf (inf + "mme") (inf + "tte") (inf + "vat") c ;
 
-  idkVerb2 : Str -> Str -> Case -> Verb2 = \inf,sg3,c ->
+  otherVerb2 : Str -> Str -> Case -> Verb2 = \inf,sg3,c ->
     mkVerb2 inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (inf + "vat") c ;
 
-  idk2Verb2 : Str -> Str -> Str -> Case -> Verb2 = \inf,sg3,rename,c ->
-    mkVerb2 inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (rename + "vat") c ; 
-    -- TODO what was the remove last letter + other function?
+  other2Verb2 : Str -> Str -> Str -> Case -> Verb2 = \inf,sg3,base,c ->
+    mkVerb2 inf (inf + "n") (inf + "t") sg3 (inf + "mme") (inf + "tte") (base + "vat") c ; 
 
   smartVerb2 : Str -> Case -> Verb2 = \inf,c -> case inf of {
     juo + ("da" | "dä") => regVerb2 juo c ;
-    kävel + ("lä") => idkVerb2 (kävel + "e") (kävel + "ee") c ;
-    ope + ("t") + ("taa") => idk2Verb2 (ope + "ta") inf (ope + "tta")  c ;
-    ta + ("p") + ("paa") => idk2Verb2 (ta + "pa") inf (ta + "ppa") c ;
-    ri + ("k") + ("koa") => idk2Verb2 (ri + "ko") inf (ri + "kko") c ;
-    os + ("taa") => idkVerb2 (os + "ta") inf c ;
+    kävel + ("lä") => otherVerb2 (kävel + "e") (kävel + "ee") c ;
+    ope + ("t") + ("taa") => other2Verb2 (ope + "ta") inf (ope + "tta")  c ;
+    ta + ("p") + ("paa") => other2Verb2 (ta + "pa") inf (ta + "ppa") c ;
+    ri + ("k") + ("koa") => other2Verb2 (ri + "ko") inf (ri + "kko") c ;
+    os + ("taa") => otherVerb2 (os + "ta") inf c ;
      _ => regVerb2 inf c
      } ;
 }
